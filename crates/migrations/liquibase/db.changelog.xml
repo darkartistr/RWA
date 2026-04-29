@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.29.xsd">
+
+    <changeSet id="001-init" author="cursor">
+        <createTable tableName="token_mints">
+            <column name="mint" type="varchar(64)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="decimals" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="timestamp with time zone" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="token_operations">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="op_type" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mint" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="numeric(40,0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sender" type="varchar(64)"/>
+            <column name="recipient" type="varchar(64)"/>
+            <column name="signature" type="varchar(128)"/>
+            <column name="status" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="error" type="text"/>
+            <column name="created_at" type="timestamp with time zone" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="token_operations" indexName="idx_token_operations_mint">
+            <column name="mint"/>
+        </createIndex>
+
+        <createIndex tableName="token_operations" indexName="idx_token_operations_signature">
+            <column name="signature"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
+
