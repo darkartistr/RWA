@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package rwa.token.v1;
+
+service TokenService {
+  rpc CreateMint(CreateMintRequest) returns (CreateMintResponse);
+  rpc MintTo(MintToRequest) returns (MintToResponse);
+  rpc Transfer(TransferRequest) returns (TransferResponse);
+  rpc Burn(BurnRequest) returns (BurnResponse);
+}
+
+message CreateMintRequest {
+  uint32 decimals = 1;
+}
+
+message CreateMintResponse {
+  string mint = 1;
+  string signature = 2;
+}
+
+message MintToRequest {
+  string mint = 1;
+  string recipient_owner = 2;
+  uint64 amount = 3;
+}
+
+message MintToResponse {
+  string signature = 1;
+  string recipient_ata = 2;
+}
+
+message TransferRequest {
+  string mint = 1;
+  string sender_owner = 2;
+  string recipient_owner = 3;
+  uint64 amount = 4;
+}
+
+message TransferResponse {
+  string signature = 1;
+  string sender_ata = 2;
+  string recipient_ata = 3;
+}
+
+message BurnRequest {
+  string mint = 1;
+  string owner = 2;
+  uint64 amount = 3;
+}
+
+message BurnResponse {
+  string signature = 1;
+  string owner_ata = 2;
+}
+
